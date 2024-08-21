@@ -24,6 +24,8 @@ class ConnectFour
   def move(col)
     row = @board.length - 1
 
+    puts "\nColumn is already full, chose another one." if @board[row][col] != ' '
+
     while row >= 0 do
       if @board[row][col] == ' '
         @board[row][col] = @current_player.symbol
