@@ -2,7 +2,7 @@ require_relative 'player.rb'
 
 class ConnectFour
 
-  attr_accessor :row, :col, :board, :player1, :player2, :turn
+  attr_accessor :row, :col, :board, :player1, :player2, :current_player, :winner
 
   def initialize
     @row = 6
@@ -10,7 +10,6 @@ class ConnectFour
     @board = Array.new(@row) {Array.new(@col, " ")}
     @player1 = Player.new("Player One", "◯")
     @player2 = Player.new("Player Two", "★")
-    @turn = 1
     @current_player = @player1
     @winner = nil
   end
@@ -30,6 +29,7 @@ class ConnectFour
         @board[row][col] = @current_player.symbol
 
         check_win(row, col)
+        display_board
         check_tie
         switch_player
 
@@ -57,10 +57,10 @@ class ConnectFour
 
     if directions.any? { |dir| count_consecutive(row, col, dir[0], dir[1], symbol) >= 4 }
       @winner = @current_player
-      puts "Congrats #{@winner.name} (#{@winner.symbol}) YOU WON!"
-      true
+      puts "\nCongrats #{@winner.name} (#{@winner.symbol}) YOU WON!"
+      return true
     else
-      false
+      return false
     end
 
   end
@@ -87,7 +87,7 @@ class ConnectFour
   def check_tie
     full_board = @board.all? { |row| row.all? { |cell| cell != " " } }
     if full_board && @winner.nil?
-      puts "It's a tie!"
+      puts "\nIt's a tie!"
       return true
     end
   end

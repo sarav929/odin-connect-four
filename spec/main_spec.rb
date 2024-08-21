@@ -104,7 +104,7 @@ describe ConnectFour do
       end 
 
       it "announces the winner with 4 horizontal slots" do
-        expect { game.check_win(5, 0) }.to output("Congrats Player One (◯) YOU WON!\n").to_stdout
+        expect { game.check_win(5, 0) }.to output("\nCongrats Player One (◯) YOU WON!\n").to_stdout
       end
     end
 
@@ -119,7 +119,7 @@ describe ConnectFour do
       end
 
       it "announces the winner with 4 vertical slots" do
-        expect { game.check_win(5, 0) }.to output("Congrats Player One (◯) YOU WON!\n").to_stdout
+        expect { game.check_win(5, 0) }.to output("\nCongrats Player One (◯) YOU WON!\n").to_stdout
       end
     end
 
@@ -132,7 +132,7 @@ describe ConnectFour do
         board[2][3] = "★"
       end
       it "announces the winner with 4 diagonal slots" do
-        expect { game.check_win(2, 3) }.to output("Congrats Player Two (★) YOU WON!\n").to_stdout
+        expect { game.check_win(2, 3) }.to output("\nCongrats Player Two (★) YOU WON!\n").to_stdout
       end
     end
 
@@ -160,7 +160,7 @@ describe ConnectFour do
         game.instance_variable_set(:@winner, nil)
       end
       it "announces a tie when all slots are taken with no winner" do
-        expect { game.check_tie }.to output("It's a tie!\n").to_stdout
+        expect { game.check_tie }.to output("\nIt's a tie!\n").to_stdout
       end
     end
   end
