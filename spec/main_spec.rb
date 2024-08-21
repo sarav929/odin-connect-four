@@ -80,7 +80,11 @@ describe ConnectFour do
     end
 
     context "when switching players" do
-      before { game.move(3) }
+
+      before do
+        game.move(3) 
+      end
+
       it "updates the current player for the next round" do
         expect(game.instance_variable_get(:@current_player)).to eq(game.instance_variable_get(:@player2))
       end
@@ -90,40 +94,56 @@ describe ConnectFour do
   describe "#check_win" do
     subject(:game) { ConnectFour.new }
     let(:board) { game.instance_variable_get(:@board) }
+    
 
     context "when 4 horizontal slots have the same symbol" do
-      before { board[5][0..3] = ["◯", "◯", "◯", "◯"] }
-      xit "announces the winner with 4 horizontal slots" do
-        expect { game.check_win(5, 0) }.to output("Congrats Player1, YOU WON!\n").to_stdout
+
+      before do
+        game.instance_variable_set(:@current_player, game.player1)
+        board[5][0..3] = ["◯", "◯", "◯", "◯"]
+      end 
+
+      it "announces the winner with 4 horizontal slots" do
+        expect { game.check_win(5, 0) }.to output("Congrats Player One (◯) YOU WON!\n").to_stdout
       end
     end
 
     context "when 4 vertical slots have the same symbol" do
-      before { board[0..3].each { |row| row[3] = "◯" } }
-      xit "announces the winner with 4 vertical slots" do
-        expect { game.check_win(3, 3) }.to output("Congrats Player1, YOU WON!\n").to_stdout
+
+      before do
+        game.instance_variable_set(:@current_player, game.player1)
+        board[5][0] = "◯"
+        board[4][0] = "◯"
+        board[3][0] = "◯"
+        board[2][0] = "◯"
+      end
+
+      it "announces the winner with 4 vertical slots" do
+        expect { game.check_win(5, 0) }.to output("Congrats Player One (◯) YOU WON!\n").to_stdout
       end
     end
 
     context "when 4 diagonal slots have the same symbol" do
       before do
+        game.instance_variable_set(:@current_player, game.player2)
         board[5][0] = "★"
         board[4][1] = "★"
         board[3][2] = "★"
         board[2][3] = "★"
       end
-      xit "announces the winner with 4 diagonal slots" do
-        expect { game.check_win(2, 3) }.to output("Congrats Player2, YOU WON!\n").to_stdout
+      it "announces the winner with 4 diagonal slots" do
+        expect { game.check_win(2, 3) }.to output("Congrats Player Two (★) YOU WON!\n").to_stdout
       end
     end
 
     context "when no win conditions are met" do
       before do
+        game.instance_variable_set(:@current_player, game.player2)
         board[5][0] = "★"
         board[4][1] = "★"
         board[3][2] = "★"
       end
-      xit "does not recognize a win and returns false" do
+      it "does not recognize a win and returns false" do
         expect(game.check_win(5, 0)).to be(false)
       end
     end
