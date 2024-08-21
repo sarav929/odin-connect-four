@@ -9,7 +9,7 @@ class ConnectFour
 
     @player1 = Player.new("Player One", "◯")
     @player2 = Player.new("Player Two", "★")
-    @@turn = 1
+    @turn = 1
     @current_player = @player1
     @winner = nil
   end
@@ -29,7 +29,7 @@ class ConnectFour
         break
       end      
     end
-    @@turn += 1
+    @turn += 1
     switch_player
   end
 
@@ -39,5 +39,20 @@ class ConnectFour
     else
       @current_player = @player1
     end
+  end
+
+  def check_win(row, col)
+    
+
+  end
+
+  def check_tie
+    full_board = @board.all? { |row| row.all? { |cell| cell != " " } } 
+
+    if full_board && @winner.nil?
+      puts "It's a tie!" 
+      return true
+    end
+
   end
 end
